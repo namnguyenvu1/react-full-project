@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
@@ -46,9 +46,44 @@ const Cities = () => {
                 {errorMessage && <p>{errorMessage}</p>}
                 {successMessage && <p>{successMessage}</p>}
             </form>
+
+            {/* Display all cities */}
+            <CityList />
         </div>
     )
 
 }
+
+const CityList = () => {
+    const [cities, setCities] = useState([]);
+
+    useEffect(() => {
+        // Fetch all cities from the server
+        const fetchCities = async () => {
+            try {
+                const res = await axios.get("http://localhost:8800/api/cities/getAllCity");
+                setCities(res.data);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchCities();
+    }, []);
+
+    return (
+        <div>
+            <h1>All Cities</h1>
+            <ul>
+                {cities.map(city => (
+                    <li key={city.cities_id}>
+                        {city.cities_name} - {city.cities_rate}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
+
 
 export default Cities

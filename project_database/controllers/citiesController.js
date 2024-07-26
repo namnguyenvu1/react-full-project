@@ -30,3 +30,15 @@ export const addCities = (req, res) => {
         })
     }
 }
+
+export const getAllCity = (req, res)=>{
+    db.query('SELECT * FROM react_project.Cities ORDER BY cities_rate desc', function (err, rows) {
+
+        if (err) {
+            req.flash('error', err);
+            res.send('product', {data: ''});
+        } else {
+            res.send(rows);
+        }
+    });
+}
