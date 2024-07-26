@@ -49,6 +49,9 @@ const Cities = () => {
 
             {/* Display all cities */}
             <CityList />
+
+            {/* Search a city */}
+            <SearchACity />
         </div>
     )
 
@@ -85,5 +88,55 @@ const CityList = () => {
     );
 };
 
+const SearchACity = () => {
+    // Get input to search
+    const [cities, searchCitiesInput] = useState({
+        // Add info
+        cities_id:""
+    })
+
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    // Display output
+    const [citiesOutput, searchCitiesOutput] = useState([]);
+
+    const handleChange = e =>{
+        searchCitiesInput(prev=>({...prev, [e.target.name]: e.target.value}))
+    }
+
+
+    const searchAProduct = async e => {
+        console.log(cities)
+        try{
+            const res = await axios.post("http://localhost:8800/api/cities/searchACity",cities)
+            console.log(res.data)
+            searchCitiesOutput(res.data);
+            setSuccessMessage(res.data.success);
+        }catch(err){
+            console.log(err);
+            setErrorMessage(err.message);
+        }
+    }
+
+    return (
+        <div>
+            <h1>Search A City</h1>
+            <form>
+                <input type='text' placeholder='cities_id' name='cities_id' autoComplete='off' onChange={handleChange} />
+                <button type='button' onClick={searchAProduct}>Search a city</button>
+                {errorMessage && <p>{errorMessage}</p>}
+                {successMessage && <p>{successMessage}</p>}
+            </form>
+            <ul>
+                {citiesOutput.map(cities => (
+                    <li key={cities.cities_id}>
+                        {cities.cities_name} - {cities.cities_rate}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
 export default Cities

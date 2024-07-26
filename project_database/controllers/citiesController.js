@@ -42,3 +42,27 @@ export const getAllCity = (req, res)=>{
         }
     });
 }
+
+export const searchACity = (req, res)=>{
+    let cities_id = req.body.cities_id;
+    let errors = false;
+
+    // if no error
+    if (!errors) {
+
+        var form_data = {
+            cities_id: cities_id
+        }
+
+        // insert query
+        // dbConn have been changed to db
+        db.query('SELECT * FROM react_project.Cities where cities_id = ' + cities_id + ' ORDER BY cities_id desc', function (err, rows) {
+
+            if (err) {
+                res.json(err);
+            } else {
+                res.json(rows);
+            }
+        });
+    }
+}
