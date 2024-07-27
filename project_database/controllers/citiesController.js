@@ -66,3 +66,62 @@ export const searchACity = (req, res)=>{
         });
     }
 }
+
+export const updateACity = (req, res)=>{
+    let cities_id = req.body.cities_id;
+    let cities_rate = req.body.cities_rate;
+    let errors = false;
+
+    // if no error
+    if (!errors) {
+
+        var form_data = {
+            cities_id: cities_id
+        }
+
+        // insert query
+        // dbConn have been changed to db
+        db.query('UPDATE react_project.Cities SET cities_rate = ' + '"' + cities_rate + '"' + ' where cities_id = ' + cities_id, function (err, rows) {
+
+            if (err) {
+                // req.flash('error', err);
+                // render to views/books/index.ejs
+                res.json(err);
+            } else {
+                // render to views/books/index.ejs
+                // res.render('books',{data:rows});
+                res.json(rows);
+            }
+        });
+    }
+}
+
+
+// DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+export const deleteACity = (req, res)=>{
+    let cities_id = req.body.cities_id;
+    let errors = false;
+
+    // if no error
+    if (!errors) {
+
+        var form_data = {
+            cities_id: cities_id
+        }
+
+        // insert query
+        // dbConn have been changed to db
+        db.query('DELETE FROM react_project.Cities where cities_id = ' + cities_id, function (err, rows) {
+
+            if (err) {
+                // req.flash('error', err);
+                // render to views/books/index.ejs
+                res.json(err);
+            } else {
+                // render to views/books/index.ejs
+                // res.render('books',{data:rows});
+                res.json(rows);
+            }
+        });
+    }
+}

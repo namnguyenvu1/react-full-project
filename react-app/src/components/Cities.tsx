@@ -52,6 +52,12 @@ const Cities = () => {
 
             {/* Search a city */}
             <SearchACity />
+
+            {/* Update a city */}
+            <UpdateACity />
+
+            {/* Delete a city */}
+           <DeleteACity />
         </div>
     )
 
@@ -135,6 +141,96 @@ const SearchACity = () => {
                     </li>
                 ))}
             </ul>
+        </div>
+    );
+};
+
+const UpdateACity = () => {
+    // Get input to search
+    const [cities, updateCitiesInput] = useState({
+        // Add info
+        cities_id:"",
+        cities_rate:""
+    })
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    // Display output
+    const [citiesOutput, updateCitiesOutput] = useState([]);
+
+    const handleChange = e =>{
+        updateCitiesInput(prev=>({...prev, [e.target.name]: e.target.value}))
+    }
+
+
+    const UpdateACity = async e => {
+        console.log(cities)
+        try{
+            const res = await axios.post("http://localhost:8800/api/cities/updateACity",cities)
+            console.log(res.data)
+            updateCitiesOutput(res.data);
+            setSuccessMessage(res.data.success);
+        }catch(err){
+            console.log(err);
+            setErrorMessage(err.message);
+        }
+    }
+
+    return (
+        <div>
+            <h1>Update A City</h1>
+            <form>
+                <input type='text' placeholder='cities_id' name='cities_id' autoComplete='off' onChange={handleChange} />
+                <input type='text' placeholder='cities_rate' name='cities_rate' autoComplete='off' onChange={handleChange} />
+                <button type='button' onClick={UpdateACity}>Update a city</button>
+                {errorMessage && <p>{errorMessage}</p>}
+                {successMessage && <p>{successMessage}</p>}
+            </form>
+        </div>
+    );
+};
+
+const DeleteACity = () => {
+    // Get input to search
+    const [cities, deleteCitiesInput] = useState({
+        // Add info
+        cities_id:""
+    })
+
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    // Display output
+    const [citiesOutput, deleteCitiesOutput] = useState([]);
+
+    const handleChange = e =>{
+        deleteCitiesInput(prev=>({...prev, [e.target.name]: e.target.value}))
+    }
+
+
+    const deleteAWarehouse = async e => {
+        console.log(cities)
+        try{
+            const res = await axios.post("http://localhost:8800/api/cities/deleteACity",cities)
+            console.log(res.data)
+            deleteCitiesOutput(res.data);
+            setSuccessMessage(res.data.success);
+        }catch(err){
+            console.log(err);
+            setErrorMessage(err.message);
+        }
+    }
+
+    return (
+        <div>
+            <h1>Delete A City</h1>
+            <form>
+                <input type='text' placeholder='cities_id' name='cities_id' autoComplete='off' onChange={handleChange} />
+                
+                <button type='button' onClick={deleteAWarehouse}>Delete a city</button>
+                {errorMessage && <p>{errorMessage}</p>}
+                {successMessage && <p>{successMessage}</p>}
+            </form>
         </div>
     );
 };
