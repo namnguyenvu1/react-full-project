@@ -22,7 +22,7 @@ function ListGroup() {
         );
     
     // Event handler
-    const handleClick = (event: MouseEvent) => console.log(event)
+    // const handleClick = (event: MouseEvent) => console.log(event)
 
   return (
     <div>

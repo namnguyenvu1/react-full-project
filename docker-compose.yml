@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./project_database # Backend folder name
+    ports:
+      - "8801:8800"
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - db
+
+  frontend:
+    build: ./react-app  # Frontend folder name
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=development
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: vunamnguyen123
+      MYSQL_DATABASE: react_project
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

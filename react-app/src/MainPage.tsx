@@ -9,6 +9,8 @@ import Select from './components/Select'
 import Array from './components/Array'
 import ObjectArray from './components/ObjectArray'
 import Cities from './components/Cities'
+import SeatSelection from "./components/SeatSelection";
+import Checkout from "./components/Checkout";
 import { createBrowserRouter, Link, Outlet } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -25,6 +27,9 @@ const MainPage = () => {
                 </li>
                 <li>
                     <Link to="/cities">Cities</Link>
+                </li>
+                <li>
+                    <Link to="/seatSelection">Seat Selection</Link> {/* Add this line */}
                 </li>
                 </ul>
 

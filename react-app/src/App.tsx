@@ -12,6 +12,8 @@ import Array from './components/Array'
 import ObjectArray from './components/ObjectArray'
 import Cities from './components/Cities'
 import MainPage from './MainPage'
+import SeatSelection from "./components/SeatSelection";
+import Checkout from "./components/Checkout";
 import {createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
@@ -44,6 +46,14 @@ const router = createBrowserRouter ([
           {
             path: "/cities",
             element:<Cities/>
+          },
+          {
+            path: "/checkout/:seatCount",
+            element:<Checkout/>
+          },
+          {
+            path:"/seatSelection",
+            element:<SeatSelection/>
           }
       ]
   }
